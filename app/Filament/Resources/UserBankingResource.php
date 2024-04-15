@@ -10,12 +10,12 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserBankingResource extends Resource
 {
     protected static ?string $model = UserBanking::class;
+
+    protected static ?string $recordTitleAttribute = 'bic';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,7 +23,16 @@ class UserBankingResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'email')
+                    ->required()
+                    ->native(false),
+
+                Forms\Components\TextInput::make('iban')
+                    ->required(),
+
+                Forms\Components\TextInput::make('bic')
+                    ->required(),
             ]);
     }
 
@@ -31,7 +40,23 @@ class UserBankingResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user.name')
+                    ->translateLabel()
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('user.email')
+                    ->translateLabel()
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('iban')
+                    ->label('IBAN')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('bic')
+                    ->label('BIC')
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -58,6 +83,7 @@ class UserBankingResource extends Resource
         return [
             'index' => Pages\ListUserBankings::route('/'),
             'create' => Pages\CreateUserBanking::route('/create'),
+            'view' => Pages\ViewUserBanking::route('/{record}'),
             'edit' => Pages\EditUserBanking::route('/{record}/edit'),
         ];
     }

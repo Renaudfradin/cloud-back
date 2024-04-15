@@ -20,6 +20,6 @@ class Course extends Model
 
     public function category(): HasMany
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Category::class, 'name');
     }
 }

@@ -13,13 +13,13 @@ class Article extends Model
 
     protected $guarded = ['id'];
 
-    public function article(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function article_category(): HasMany
+    public function category(): HasMany
     {
-        return $this->hasMany(Article_category::class);
+        return $this->hasMany(ArticleCategory::class, 'name');
     }
 }

@@ -7,15 +7,17 @@ use App\Filament\Resources\ArticleCategoryResource\RelationManagers;
 use App\Models\ArticleCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class ArticleCategoryResource extends Resource
 {
     protected static ?string $model = ArticleCategory::class;
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,7 +25,17 @@ class ArticleCategoryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->translateLabel()
+                    ->required()
+                    ->maxLength(150)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+
+                Forms\Components\TextInput::make('slug')
+                    ->translateLabel()
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -31,7 +43,9 @@ class ArticleCategoryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->translateLabel()
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -58,6 +72,7 @@ class ArticleCategoryResource extends Resource
         return [
             'index' => Pages\ListArticleCategories::route('/'),
             'create' => Pages\CreateArticleCategory::route('/create'),
+            'view' => Pages\ViewArticleCategory::route('/{record}'),
             'edit' => Pages\EditArticleCategory::route('/{record}/edit'),
         ];
     }
