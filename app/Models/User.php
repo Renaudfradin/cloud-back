@@ -33,7 +33,7 @@ class User extends Authenticatable
 
     public function user_banking(): HasOne
     {
-        return $this->hasOne(Subscription::class);
+        return $this->hasOne(UserBanking::class);
     }
 
     public function article(): HasMany

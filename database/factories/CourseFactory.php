@@ -2,22 +2,22 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Course>
- */
 class CourseFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'slug' => fake()->slug(),
+            'content' => fake()->paragraph(),
+            'user_id' => User::class,
+            'category_id' => Category::class,
+            'url_course_video' => fake()->url(),
+            'external_link' => fake()->url(),
         ];
     }
 }
