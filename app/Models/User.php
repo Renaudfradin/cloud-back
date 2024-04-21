@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,9 +22,14 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function course(): HasMany
+    public function courseslist(): HasMany
     {
-        return $this->hasMany(Course::class);
+        return $this->hasMany(Course::class, 'teacher_id');
+    }
+
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'course_user');
     }
 
     public function subscription(): HasMany
@@ -39,6 +45,11 @@ class User extends Authenticatable
     public function article(): HasMany
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->teacher === true;
     }
 
     protected function casts(): array

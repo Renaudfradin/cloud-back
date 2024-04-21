@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('slug', 255);
             $table->longText('content');
-            $table->foreignId('user_id');
+            $table->foreignId('teacher_id');
             $table->foreignId('category_id');
             $table->string('url_course_video');
             $table->string('external_link');

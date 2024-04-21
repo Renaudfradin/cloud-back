@@ -14,7 +14,7 @@ class CourseFactory extends Factory
             'name' => fake()->name(),
             'slug' => fake()->slug(),
             'content' => fake()->paragraph(),
-            'user_id' => User::class,
+            'teacher_id' => User::class,
             'category_id' => Category::class,
             'url_course_video' => fake()->url(),
             'external_link' => fake()->url(),

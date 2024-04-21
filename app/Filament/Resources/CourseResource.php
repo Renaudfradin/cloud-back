@@ -39,14 +39,16 @@ class CourseResource extends Resource
                     ->required()
                     ->columnSpanFull(),
 
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'email')
+                Forms\Components\Select::make('teacher_id')
+                    ->relationship('teacher', 'email')
                     ->required()
+                    ->preload()
                     ->native(false),
 
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name')
                     ->required()
+                    ->preload()
                     ->native(false),
 
                 Forms\Components\TextInput::make('url_course_video')
@@ -71,7 +73,7 @@ class CourseResource extends Resource
                     ->translateLabel()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('user.email')
+                Tables\Columns\TextColumn::make('teacher.email')
                     ->label(__('User Email')),
 
                 Tables\Columns\TextColumn::make('category.name')

@@ -21,27 +21,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->withProgressBar(1, fn () => User::factory(1)
-            ->has(UserBanking::factory(), 'user_banking')
-            ->has(Subscription::factory()->count(2), 'subscription')
-            ->has(Course::factory()->count(10)->state(
-                ['category_id' => Category::factory()]
-            ))
-            ->has(Article::factory()->count(10)->state(
-                ['category_id' => ArticleCategory::factory()]
-            ))
-            ->create([
-                'name' => 'Test User',
-                'email' => 'test@gmail.com',
-            ]));
+        $this->withProgressBar(1, fn () => 
+            User::factory(1)
+                ->has(UserBanking::factory(), 'user_banking')
+                ->has(Subscription::factory()->count(2), 'subscription')
+                ->has(Course::factory()->count(10)->state(
+                    ['category_id' => Category::factory()]
+                ), 'courseslist')
+                // ->for(Course::factory()->count(5)->state(
+                //     ['category_id' => Category::factory()]
+                // ), 'courses')
+                ->has(Article::factory()->count(10)->state(
+                    ['category_id' => ArticleCategory::factory()]
+                ))
+                ->create([
+                    'name' => 'Test User',
+                    'email' => 'test@gmail.com',
+                ])
+            );
         $this->command->info('Admin user created.');
 
-        $this->withProgressBar(1, fn () => User::factory(1)
+        $this->withProgressBar(1, fn () =>  User::factory(1)
             ->has(UserBanking::factory(), 'user_banking')
             ->has(Subscription::factory()->count(2), 'subscription')
             ->has(Course::factory()->count(10)->state(
                 ['category_id' => Category::factory()]
-            ))
+            ), 'courseslist')
+            // ->for(Course::factory()->count(5)->state(
+            //     ['category_id' => Category::factory()]
+            // ), 'courses')
             ->has(Article::factory()->count(10)->state(
                 ['category_id' => ArticleCategory::factory()]
             ))
@@ -51,12 +59,15 @@ class DatabaseSeeder extends Seeder
             ]));
         $this->command->info('Admin Renaud created.');
 
-        $this->withProgressBar(1, fn () => User::factory(1)
+        $this->withProgressBar(1, fn () =>  User::factory(1)
             ->has(UserBanking::factory(), 'user_banking')
             ->has(Subscription::factory()->count(2), 'subscription')
             ->has(Course::factory()->count(10)->state(
                 ['category_id' => Category::factory()]
-            ))
+            ), 'courseslist')
+            // ->for(Course::factory()->count(5)->state(
+            //     ['category_id' => Category::factory()]
+            // ), 'courses')
             ->has(Article::factory()->count(10)->state(
                 ['category_id' => ArticleCategory::factory()]
             ))
@@ -71,7 +82,10 @@ class DatabaseSeeder extends Seeder
             ->has(Subscription::factory()->count(2), 'subscription')
             ->has(Course::factory()->count(10)->state(
                 ['category_id' => Category::factory()]
-            ))
+            ), 'courseslist')
+            // ->for(Course::factory()->count(5)->state(
+            //     ['category_id' => Category::factory()]
+            // ), 'courses')
             ->has(Article::factory()->count(10)->state(
                 ['category_id' => ArticleCategory::factory()]
             ))
@@ -81,12 +95,15 @@ class DatabaseSeeder extends Seeder
             ]));
         $this->command->info('Admin Sabrine created.');
 
-        User::factory(500)
+        User::factory(2000)
             ->has(UserBanking::factory(), 'user_banking')
             ->has(Subscription::factory()->count(2), 'subscription')
             ->has(Course::factory()->count(10)->state(
                 ['category_id' => Category::factory()]
-            ))
+            ), 'courseslist')
+            // ->for(Course::factory()->count(5)->state(
+            //     ['category_id' => Category::factory()]
+            // ), 'courses')
             ->has(Article::factory()->count(10)->state(
                 ['category_id' => ArticleCategory::factory()]
             ))
