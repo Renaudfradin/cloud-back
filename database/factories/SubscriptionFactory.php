@@ -14,7 +14,7 @@ class SubscriptionFactory extends Factory
     {
         return [
             'user_id' => User::class,
-            'expiration_date'=> fake()->date(),
+            'expiration_date'=> fake()->date('Y-m-d'),
         ];
     }
 }

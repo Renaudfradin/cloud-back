@@ -95,9 +95,9 @@ class DatabaseSeeder extends Seeder
             ]));
         $this->command->info('Admin Sabrine created.');
 
-        User::factory(2000)
+        User::factory(10000)
             ->has(UserBanking::factory(), 'user_banking')
-            ->has(Subscription::factory()->count(2), 'subscription')
+            ->has(Subscription::factory()->count(1), 'subscription')
             ->has(Course::factory()->count(5)->state(
                 ['category_id' => Category::factory()]
             ), 'courseslist')
@@ -111,7 +111,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Data created.');
 
         $userCourse = User::factory()->create()->id;
-        Course::factory(100000)
+        Course::factory(1000000)
             ->create([
                 'category_id' => Category::factory(),
                 'teacher_id' => $userCourse,
