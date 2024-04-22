@@ -25,13 +25,13 @@ class DatabaseSeeder extends Seeder
             User::factory(1)
                 ->has(UserBanking::factory(), 'user_banking')
                 ->has(Subscription::factory()->count(2), 'subscription')
-                ->has(Course::factory()->count(10)->state(
+                ->has(Course::factory()->count(5)->state(
                     ['category_id' => Category::factory()]
                 ), 'courseslist')
                 // ->for(Course::factory()->count(5)->state(
                 //     ['category_id' => Category::factory()]
                 // ), 'courses')
-                ->has(Article::factory()->count(10)->state(
+                ->has(Article::factory()->count(1)->state(
                     ['category_id' => ArticleCategory::factory()]
                 ))
                 ->create([
@@ -44,13 +44,13 @@ class DatabaseSeeder extends Seeder
         $this->withProgressBar(1, fn () =>  User::factory(1)
             ->has(UserBanking::factory(), 'user_banking')
             ->has(Subscription::factory()->count(2), 'subscription')
-            ->has(Course::factory()->count(10)->state(
+            ->has(Course::factory()->count(5)->state(
                 ['category_id' => Category::factory()]
             ), 'courseslist')
             // ->for(Course::factory()->count(5)->state(
             //     ['category_id' => Category::factory()]
             // ), 'courses')
-            ->has(Article::factory()->count(10)->state(
+            ->has(Article::factory()->count(1)->state(
                 ['category_id' => ArticleCategory::factory()]
             ))
             ->create([
@@ -62,13 +62,13 @@ class DatabaseSeeder extends Seeder
         $this->withProgressBar(1, fn () =>  User::factory(1)
             ->has(UserBanking::factory(), 'user_banking')
             ->has(Subscription::factory()->count(2), 'subscription')
-            ->has(Course::factory()->count(10)->state(
+            ->has(Course::factory()->count(5)->state(
                 ['category_id' => Category::factory()]
             ), 'courseslist')
             // ->for(Course::factory()->count(5)->state(
             //     ['category_id' => Category::factory()]
             // ), 'courses')
-            ->has(Article::factory()->count(10)->state(
+            ->has(Article::factory()->count(5)->state(
                 ['category_id' => ArticleCategory::factory()]
             ))
             ->create([
@@ -80,13 +80,13 @@ class DatabaseSeeder extends Seeder
         $this->withProgressBar(1, fn () => User::factory(1)
             ->has(UserBanking::factory(), 'user_banking')
             ->has(Subscription::factory()->count(2), 'subscription')
-            ->has(Course::factory()->count(10)->state(
+            ->has(Course::factory()->count(5)->state(
                 ['category_id' => Category::factory()]
             ), 'courseslist')
             // ->for(Course::factory()->count(5)->state(
             //     ['category_id' => Category::factory()]
             // ), 'courses')
-            ->has(Article::factory()->count(10)->state(
+            ->has(Article::factory()->count(1)->state(
                 ['category_id' => ArticleCategory::factory()]
             ))
             ->create([
@@ -98,17 +98,25 @@ class DatabaseSeeder extends Seeder
         User::factory(2000)
             ->has(UserBanking::factory(), 'user_banking')
             ->has(Subscription::factory()->count(2), 'subscription')
-            ->has(Course::factory()->count(10)->state(
+            ->has(Course::factory()->count(5)->state(
                 ['category_id' => Category::factory()]
             ), 'courseslist')
             // ->for(Course::factory()->count(5)->state(
             //     ['category_id' => Category::factory()]
             // ), 'courses')
-            ->has(Article::factory()->count(10)->state(
+            ->has(Article::factory()->count(1)->state(
                 ['category_id' => ArticleCategory::factory()]
             ))
             ->create();
         $this->command->info('Data created.');
+
+        $userCourse = User::factory()->create()->id;
+        Course::factory(35000)
+            ->create([
+                'category_id' => Category::factory(),
+                'teacher_id' => $userCourse,
+            ]);
+        $this->command->info('Course created.');
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection
