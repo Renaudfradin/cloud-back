@@ -111,7 +111,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Data created.');
 
         $userCourse = User::factory()->create()->id;
-        Course::factory(35000)
+        Course::factory(100000)
             ->create([
                 'category_id' => Category::factory(),
                 'teacher_id' => $userCourse,
