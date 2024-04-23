@@ -19,7 +19,7 @@ start docker
 
 run migartion
 ```sh
-./vendor/bin/sail migrate
+./vendor/bin/sail artisan migrate
 ```
 
 execute factory
@@ -27,18 +27,12 @@ execute factory
 ./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
-generate doc
-```sh
-php artisan l5-swagger:generate
-```
-
-
 3. Base Url
 
-http://localhost:8001/
+http://127.0.0.1:8001/
 
-CMS : http://localhost:8001/admin
+CMS : http://127.0.0.1:8001/admin
 
-API : http://localhost:8001/api
+API : http://127.0.0.1:8001/graphql
 
-DOC : http://localhost:8001/api/documentation
+DOC : http://127.0.0.1:8001/graphiql
