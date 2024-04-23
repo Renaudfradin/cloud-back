@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
             ]));
         $this->command->info('Admin Sabrine created.');
 
-        User::factory(10000)
+        User::factory(2000)
             ->has(UserBanking::factory(), 'user_banking')
             ->has(Subscription::factory()->count(1), 'subscription')
             ->has(Course::factory()->count(5)->state(

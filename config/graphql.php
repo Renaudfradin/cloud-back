@@ -2,6 +2,20 @@
 
 declare(strict_types = 1);
 
+use App\GraphQL\Mutations\CreateUserMutation;
+use App\GraphQL\Mutations\DeleteUserMutation;
+use App\GraphQL\Mutations\UpdateUserMutation;
+use App\GraphQL\Queries\ArticlesQuery;
+use App\GraphQL\Queries\UserQuery;
+use App\GraphQL\Queries\UsersQuery;
+use App\GraphQL\Types\ArticleCategoryType;
+use App\GraphQL\Types\ArticleType;
+use App\GraphQL\Types\CategoryType;
+use App\GraphQL\Types\CourseType;
+use App\GraphQL\Types\SubscriptionType;
+use App\GraphQL\Types\UserBankingType;
+use App\GraphQL\Types\UserType;
+
 return [
     'route' => [
         // The prefix for routes; do NOT use a leading slash!
@@ -75,14 +89,24 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-                // ExampleQuery::class,
+                UsersQuery::class,
+                UserQuery::class,
+                ArticlesQuery::class,
             ],
             'mutation' => [
-                // ExampleMutation::class,
+                CreateUserMutation::class,
+                UpdateUserMutation::class,
+                DeleteUserMutation::class,
             ],
             // The types only available in this schema
             'types' => [
-                // ExampleType::class,
+                UserType::class,
+                UserBankingType::class,
+                SubscriptionType::class,
+                ArticleType::class,
+                ArticleCategoryType::class,
+                CourseType::class,
+                CategoryType::class,
             ],
 
             // Laravel HTTP middleware
