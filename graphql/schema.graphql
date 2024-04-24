@@ -5,37 +5,84 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 type Query {
     "Find a single user by an identifying attribute."
     user(
-      "Search by primary key."
       id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
-
-      "Search by email address."
-      email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
     ): User @find
 
-    "List multiple users."
-    users(
-      "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
-      name: String @where(operator: "like")
-    ): [User!]! @paginate(defaultCount: 10)
+    "List all users."
+    users: [User!]! @all
+
+    courses: [Course!]! @all
+
+    articles: [Article!]! @all
 }
 
-"Account of a person who utilizes this application."
 type User {
-    "Unique primary key."
-    id: ID!
+  id: ID!
+  name: String!
+  email: String!
+  last_name: String!
+  teacher: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  courses: [Course]! @belongsToMany
+  courseslist: [Course]! @hasMany
+  article: [Article]! @hasMany
+}
 
-    "Non-unique name."
-    name: String!
+# type UserBanking {
+#   id: ID!
+#   iban: String!
+#   bic: String!
+#   created_at: DateTime!
+#   updated_at: DateTime!
+# }
 
-    "Unique email address."
-    email: String!
+# type Subscription {
+#   id: ID!
+#   user_id: String!
+#   expiration_date: DateTime!
+#   created_at: DateTime!
+#   updated_at: DateTime!
+# }
 
-    "When the email was verified."
-    email_verified_at: DateTime
+type Course {
+  id: ID!
+  name: String!
+  slug: String!
+  content: String!
+  teacher_id: String!
+  category_id: String!
+  url_course_video: String!
+  external_link: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
 
-    "When the account was created."
-    created_at: DateTime!
+type Category {
+  id: ID!
+  name: String!
+  slug: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
 
-    "When the account was last updated."
-    updated_at: DateTime!
+type Article {
+  id: ID!
+  title: String!
+  slug: String!
+  content: String!
+  image: String!
+  user_id: String!
+  category_id: String!
+  status: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type ArticleCategory {
+  id: ID!
+  name: String!
+  slug: String!
+  created_at: DateTime!
+  updated_at: DateTime!
 }
