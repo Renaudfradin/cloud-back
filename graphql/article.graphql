@@ -1,0 +1,89 @@
+extend type Query {
+  "Selct Article width id"
+  article(id: Int! @eq): Article @find @guard 
+
+  "Selct Article Category width id"
+  articleCategory(id: Int! @eq): ArticleCategory @find @guard 
+
+  "List all Articles."
+  articles: [Article!]! @paginate @guard 
+
+  # "List all Articles Category."
+  # articlesCategory: [ArticleCategory!]! @all @guard 
+}
+
+
+extend type Mutation {
+ createArticle(
+    title: String!,
+    slug: String!,
+    content: String!,
+    image: String,
+    user_id: ID!,
+    category_id: ID!,
+    status: Boolean!,
+  ): Article! @create @guard 
+
+  updateArticle(
+    id: ID!,
+    title: String,
+    slug: String,
+    content: String,
+    image: String,
+    user_id: ID,
+    category_id: ID,
+    status: Boolean,
+  ): Article! @update @guard 
+
+  deleteArticle(id: ID! @whereKey): Article @delete @guard 
+
+  createArticlesCategory(
+    name: String!
+    slug: String!
+  ): ArticleCategory! @create @guard 
+
+  updateArticlesCategory(
+    id: ID!,
+    name: String!
+    slug: String!
+  ): ArticleCategory! @update @guard 
+
+  deleteArticlesCategory(id: ID! @whereKey): ArticleCategory @delete @guard 
+}
+
+type Article {
+  id: ID!
+  title: String!
+  slug: String!
+  content: String!
+  image: String!
+  user_id: ID!
+  category_id: ID!
+  status: Boolean!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type UserPaginator {
+  paginatorInfo: PaginatorInfo!
+  data: [Article!]!
+}
+
+type PaginatorInfo {
+  count: Int!
+  currentPage: Int!
+  firstItem: Int
+  hasMorePages: Boolean!
+  lastItem: Int
+  lastPage: Int!
+  perPage: Int!
+  total: Int!
+}
+
+type ArticleCategory {
+  id: ID!
+  name: String!
+  slug: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}

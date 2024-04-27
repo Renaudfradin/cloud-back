@@ -1,0 +1,89 @@
+extend type Query {
+  "Selct Course width id"
+  course(id: Int! @eq): Course @find @guard 
+
+  "Selct Course Category width id"
+  courseCategory(id: Int! @eq): Category @find @guard 
+
+  "List all Courses."
+  courses: [Course!]! @paginate @guard 
+
+  "List all Courses Category."
+  coursesCategory: [Category!]! @all @guard 
+}
+
+
+extend type Mutation {
+  createCourse(
+    name: String!,
+    slug: String!,
+    content: String!,
+    teacher_id: ID!,
+    category_id: ID!,
+    url_course_video: String,
+    external_link: String,
+  ): Course! @create @guard 
+
+  updateCourse(
+    id: ID!,
+    name: String,
+    slug: String,
+    content: String,
+    teacher_id: ID,
+    category_id: ID,
+    url_course_video: String,
+    external_link: String,
+  ): Course! @update @guard 
+
+  deleteCourse(id: ID! @whereKey): Course @delete @guard 
+
+  createCourseCategory(
+    name: String!
+    slug: String!
+  ): Category! @create @guard 
+
+  updateCourseCategory(
+    id: ID!,
+    name: String!
+    slug: String!
+  ): Category! @update @guard 
+
+  deleteCourseCategory(id: ID! @whereKey): Category @delete @guard 
+}
+
+type Course {
+  id: ID!
+  name: String!
+  slug: String!
+  content: String!
+  teacher_id: ID!
+  category_id: ID!
+  url_course_video: String!
+  external_link: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type UserPaginator {
+  paginatorInfo: PaginatorInfo!
+  data: [Course!]!
+}
+
+type PaginatorInfo {
+  count: Int!
+  currentPage: Int!
+  firstItem: Int
+  hasMorePages: Boolean!
+  lastItem: Int
+  lastPage: Int!
+  perPage: Int!
+  total: Int!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  slug: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}

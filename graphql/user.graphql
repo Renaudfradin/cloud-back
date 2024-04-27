@@ -1,0 +1,59 @@
+extend type Query {
+  "Selct User width auth"
+  me: User! @guard @auth
+
+  "List all users."
+  users: [User!]! @all @guard 
+}
+
+
+extend type Mutation {
+  createUser(
+    name: String!,
+    email: String!,
+    last_name: String!,
+    teacher: Boolean!,
+    password: String!,
+  ): User! @create
+
+  updateUser(
+    id: ID!, 
+    name: String,
+    email: String,
+    last_name: String,
+    teacher: Boolean,
+    password: String,
+  ): User @update @guard 
+
+  deleteUser(id: ID! @whereKey): User @delete @guard 
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  last_name: String!
+  teacher: Boolean!
+  created_at: DateTime!
+  updated_at: DateTime!
+  courses: [Course]! @belongsToMany
+  courseslist: [Course]! @hasMany
+  article: [Article]! @hasMany
+  user_banking: UserBanking @hasOne
+}
+
+type UserBanking {
+  id: ID!
+  iban: String!
+  bic: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+# type Subscription {
+#   id: ID!
+#   user_id: String!
+#   expiration_date: DateTime!
+#   created_at: DateTime!
+#   updated_at: DateTime!
+# }
