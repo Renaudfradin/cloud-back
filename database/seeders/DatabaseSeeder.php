@@ -24,14 +24,14 @@ class DatabaseSeeder extends Seeder
         $this->withProgressBar(1, fn () => 
             User::factory(1)
                 ->has(UserBanking::factory(), 'user_banking')
-                ->has(Subscription::factory()->count(2), 'subscription')
-                ->has(Course::factory()->count(5)->state(
+                ->has(Subscription::factory()->count(1), 'subscription')
+                ->has(Course::factory()->count(8)->state(
                     ['category_id' => Category::factory()]
                 ), 'courseslist')
-                // ->for(Course::factory()->count(5)->state(
-                //     ['category_id' => Category::factory()]
-                // ), 'courses')
-                ->has(Article::factory()->count(1)->state(
+                // ->hasAttached(Course::factory()->count(10),
+                //     ['teacher_id' => User::factory()->create(1)]
+                // , 'courseslist')
+                ->has(Article::factory()->count(3)->state(
                     ['category_id' => ArticleCategory::factory()]
                 ))
                 ->create([
@@ -41,82 +41,74 @@ class DatabaseSeeder extends Seeder
             );
         $this->command->info('Admin user created.');
 
-        $this->withProgressBar(1, fn () =>  User::factory(1)
-            ->has(UserBanking::factory(), 'user_banking')
-            ->has(Subscription::factory()->count(2), 'subscription')
-            ->has(Course::factory()->count(5)->state(
-                ['category_id' => Category::factory()]
-            ), 'courseslist')
-            // ->for(Course::factory()->count(5)->state(
-            //     ['category_id' => Category::factory()]
-            // ), 'courses')
-            ->has(Article::factory()->count(1)->state(
-                ['category_id' => ArticleCategory::factory()]
-            ))
-            ->create([
-                'name' => 'Renaud Fradin',
-                'email' => 'renaud.fradin@eemi.com',
-            ]));
+        $this->withProgressBar(1, fn () =>  
+            User::factory(1)
+                ->has(UserBanking::factory(), 'user_banking')
+                ->has(Subscription::factory()->count(1), 'subscription')
+                ->has(Course::factory()->count(8)->state(
+                    ['category_id' => Category::factory()]
+                ), 'courseslist')
+                ->has(Article::factory()->count(3)->state(
+                    ['category_id' => ArticleCategory::factory()]
+                ))
+                ->create([
+                    'name' => 'Renaud Fradin',
+                    'email' => 'renaud.fradin@eemi.com',
+                ]));
         $this->command->info('Admin Renaud created.');
 
-        $this->withProgressBar(1, fn () =>  User::factory(1)
-            ->has(UserBanking::factory(), 'user_banking')
-            ->has(Subscription::factory()->count(2), 'subscription')
-            ->has(Course::factory()->count(5)->state(
-                ['category_id' => Category::factory()]
-            ), 'courseslist')
-            // ->for(Course::factory()->count(5)->state(
-            //     ['category_id' => Category::factory()]
-            // ), 'courses')
-            ->has(Article::factory()->count(5)->state(
-                ['category_id' => ArticleCategory::factory()]
-            ))
-            ->create([
+        $this->withProgressBar(1, fn () => 
+            User::factory(1)
+                ->has(UserBanking::factory(), 'user_banking')
+                ->has(Subscription::factory()->count(1), 'subscription')
+                ->has(Course::factory()->count(8)->state(
+                    ['category_id' => Category::factory()]
+                ), 'courseslist')
+                ->has(Article::factory()->count(3)->state(
+                    ['category_id' => ArticleCategory::factory()]
+                ))
+                ->create([
                 'name' => 'Ismail Imounane',
                 'email' => 'ismail.imounane@eemi.com',
             ]));
         $this->command->info('Admin Ismail created.');
 
-        $this->withProgressBar(1, fn () => User::factory(1)
-            ->has(UserBanking::factory(), 'user_banking')
-            ->has(Subscription::factory()->count(2), 'subscription')
-            ->has(Course::factory()->count(5)->state(
-                ['category_id' => Category::factory()]
-            ), 'courseslist')
-            // ->for(Course::factory()->count(5)->state(
-            //     ['category_id' => Category::factory()]
-            // ), 'courses')
-            ->has(Article::factory()->count(1)->state(
-                ['category_id' => ArticleCategory::factory()]
-            ))
-            ->create([
+        $this->withProgressBar(1, fn () => 
+            User::factory(1)
+                ->has(UserBanking::factory(), 'user_banking')
+                ->has(Subscription::factory()->count(1), 'subscription')
+                ->has(Course::factory()->count(8)->state(
+                    ['category_id' => Category::factory()]
+                ), 'courseslist')
+                ->has(Article::factory()->count(3)->state(
+                    ['category_id' => ArticleCategory::factory()]
+                ))
+                ->create([
                 'name' => 'Sabrine Sefi',
                 'email' => 'sabrine.sefi@eemi.com',
             ]));
         $this->command->info('Admin Sabrine created.');
 
-        User::factory(2000)
-            ->has(UserBanking::factory(), 'user_banking')
-            ->has(Subscription::factory()->count(1), 'subscription')
-            ->has(Course::factory()->count(5)->state(
-                ['category_id' => Category::factory()]
-            ), 'courseslist')
-            // ->for(Course::factory()->count(5)->state(
-            //     ['category_id' => Category::factory()]
-            // ), 'courses')
-            ->has(Article::factory()->count(1)->state(
-                ['category_id' => ArticleCategory::factory()]
-            ))
-            ->create();
-        $this->command->info('Data created.');
+        User::factory(1000000)->create();
+        $this->command->info('User created.');
 
         $userCourse = User::factory()->create()->id;
-        Course::factory(1000000)
+        $category = Category::factory()->create()->id;
+        Course::factory(320000)
             ->create([
-                'category_id' => Category::factory(),
+                'category_id' => $category,
                 'teacher_id' => $userCourse,
             ]);
         $this->command->info('Course created.');
+        
+        $userArticle = User::factory()->create()->id;
+        $categoryArticle = ArticleCategory::factory()->create()->id;
+        Article::factory(100000)
+            ->create([
+                'category_id' => $categoryArticle,
+                'user_id' => $userArticle,
+            ]);
+        $this->command->info('Article created.');
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection
