@@ -14,7 +14,6 @@ class ArticleFactory extends Factory
             'title' => fake()->name(),
             'slug' => fake()->slug(),
             'content' => fake()->paragraph(),
-            'image' => fake()->image(),
             'user_id' => User::class,
             'category_id' => ArticleCategory::class,
             'status'=> fake()->boolean()
