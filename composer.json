@@ -6,12 +6,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "algolia/algoliasearch-client-php": "^3.4",
         "doctrine/annotations": "^2.0",
         "filament/filament": "^3.2",
         "laravel/cashier": "^15.3",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
-        "laravel/scout": "^10.8",
+        "laravel/scout": "^10.9",
         "laravel/tinker": "^2.9",
         "mll-lab/laravel-graphiql": "^3.2",
         "nuwave/lighthouse": "^6.36"
