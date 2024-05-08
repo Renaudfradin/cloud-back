@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
     use HasFactory;
     use HasApiTokens;
     use Notifiable;
+    use Searchable;
 
     protected $guarded = ['id'];
 

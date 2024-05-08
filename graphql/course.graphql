@@ -6,7 +6,13 @@ extend type Query {
   courseCategory(id: Int! @eq): Category @find @guard 
 
   "List all Courses."
-  courses: [Course!]! @paginate @guard 
+  courses: [Course!]! @paginate(defaultCount: 50) @guard 
+
+  "List Course Taken"
+  coursesTaken: [Course!]! @all @whereAuth(relation: "users") @guard 
+
+  "List Course Create"
+  coursesCreate: [Course!]! @all @whereAuth(relation: "teacher") @guard 
 
   "List all Courses Category."
   coursesCategory: [Category!]! @all @guard 

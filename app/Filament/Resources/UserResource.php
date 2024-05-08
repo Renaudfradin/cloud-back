@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers\CourseslistRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\CoursesRelationManager;
 use App\Models\User;
 use Filament\Forms;
@@ -89,6 +90,7 @@ class UserResource extends Resource
     {
         return [
             CoursesRelationManager::class,
+            CourseslistRelationManager::class,
         ];
     }
 

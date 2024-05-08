@@ -35,20 +35,22 @@ class CourseResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                Forms\Components\MarkdownEditor::make('content')
+                Forms\Components\RichEditor::make('content')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\Select::make('teacher_id')
                     ->relationship('teacher', 'email')
                     ->required()
-                    ->preload()
+                    ->searchable()
+                    ->preload(false)
                     ->native(false),
 
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name')
                     ->required()
-                    ->preload()
+                    ->searchable()
+                    ->preload(false)
                     ->native(false),
 
                 Forms\Components\TextInput::make('url_course_video')
@@ -84,6 +86,7 @@ class CourseResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

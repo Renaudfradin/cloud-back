@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserBankingResource\Pages;
-use App\Filament\Resources\UserBankingResource\RelationManagers;
 use App\Models\UserBanking;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -26,6 +25,8 @@ class UserBankingResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'email')
                     ->required()
+                    ->searchable()
+                    ->preload(false)
                     ->native(false),
 
                 Forms\Components\TextInput::make('iban')
@@ -58,24 +59,15 @@ class UserBankingResource extends Resource
                     ->label('BIC')
                     ->sortable(),
             ])
-            ->filters([
-                //
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

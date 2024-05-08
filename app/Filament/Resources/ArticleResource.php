@@ -42,11 +42,15 @@ class ArticleResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'email')
                     ->required()
+                    ->searchable()
+                    ->preload(false)
                     ->native(false),
 
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name')
                     ->required()
+                    ->searchable()
+                    ->preload(false)
                     ->native(false),
 
                 Forms\Components\Toggle::make('status')
@@ -86,6 +90,7 @@ class ArticleResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

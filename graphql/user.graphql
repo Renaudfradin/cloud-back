@@ -1,5 +1,5 @@
 extend type Query {
-  "Selct User width auth"
+  "Select User width auth"
   me: User! @guard @auth
 
   "List all users."
@@ -23,9 +23,44 @@ extend type Mutation {
     last_name: String,
     teacher: Boolean,
     password: String,
+    # article: UpdateArticleHasMany,
+    # courseslist: UpdateCourseCreateHasMany,
+    courses: UpdateCourseBelongsToMany
   ): User @update @guard 
 
   deleteUser(id: ID! @whereKey): User @delete @guard 
+}
+
+input UpdateCourseBelongsToMany {
+  "create cour on user"
+  create: [CreateCourseInput!]
+  "attach course on user"
+  connect: [ID!]
+  "detache course on user"
+  disconnect: [ID!]
+  "update course attach"
+  update: [UpdateCourseInput!]
+}
+
+input CreateCourseInput {
+  name: String!,
+  slug: String!,
+  content: String!,
+  teacher_id: ID!,
+  category_id: ID!,
+  url_course_video: String!,
+  external_link: String!,
+}
+
+input UpdateCourseInput {
+  id: ID!,
+  name: String,
+  slug: String,
+  content: String,
+  teacher_id: ID,
+  category_id: ID,
+  url_course_video: String,
+  external_link: String,
 }
 
 type User {
@@ -40,6 +75,22 @@ type User {
   courseslist: [Course]! @hasMany
   article: [Article]! @hasMany
   user_banking: UserBanking @hasOne
+}
+
+type UserPaginator {
+  paginatorInfo: PaginatorInfo
+  data: [User!]
+}
+
+type PaginatorInfo {
+  count: Int!
+  currentPage: Int!
+  firstItem: Int
+  hasMorePages: Boolean!
+  lastItem: Int
+  lastPage: Int!
+  perPage: Int!
+  total: Int!
 }
 
 type UserBanking {
