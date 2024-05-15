@@ -26,6 +26,8 @@ class SubscriptionResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'email')
                     ->required()
+                    ->searchable()
+                    ->preload(false)
                     ->native(false),
 
                 Forms\Components\DatePicker::make('expiration_date')
@@ -58,6 +60,7 @@ class SubscriptionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

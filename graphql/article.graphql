@@ -8,8 +8,8 @@ extend type Query {
   "List all Articles."
   articles: [Article!]! @paginate @guard 
 
-  # "List all Articles Category."
-  # articlesCategory: [ArticleCategory!]! @all @guard 
+  "List Article create"
+  articlesCreate: [Article!]! @all @whereAuth(relation: "user") @guard
 }
 
 
@@ -56,7 +56,7 @@ type Article {
   title: String!
   slug: String!
   content: String!
-  image: String!
+  image: String
   user_id: ID!
   category_id: ID!
   status: Boolean!

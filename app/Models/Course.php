@@ -8,13 +8,28 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 
 class Course extends Model
 {
     use HasFactory;
     use HasApiTokens;
+    use Searchable;
 
     protected $guarded = ['id'];
+
+    public function searchableAs(): string
+    {
+        return 'course_index';
+    }
+
+    public function toSearchableArray() : array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
 
     public function teacher(): BelongsTo
     {
