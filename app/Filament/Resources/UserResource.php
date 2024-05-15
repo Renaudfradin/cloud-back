@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
@@ -20,6 +21,17 @@ class UserResource extends Resource
     protected static ?string $recordTitleAttribute = 'email';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected function applySearchToTableQuery(Builder $query): Builder
+    {
+        $this->applyColumnSearchesToTableQuery($query);
+        
+        if (filled($search = $this->getTableSearch())) {
+            $query->whereIn('id', User::search($search)->keys());
+        }
+ 
+        return $query;
+    }
 
     public static function form(Form $form): Form
     {

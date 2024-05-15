@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\EngineManager;
+use Laravel\Scout\Engines\Engine;
 use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
@@ -25,6 +27,25 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function searchableAs(): string
+    {
+        return 'users';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'email' => $this->email,
+            'last_name' => $this->last_name,
+            'name' => $this->name,
+        ];
+    }
+
+    public function searchableUsing(): Engine
+    {
+        return app(EngineManager::class)->engine('algolia');
+    }
 
     public function courseslist(): HasMany
     {
