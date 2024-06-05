@@ -1,0 +1,54 @@
+config:
+  target: 'https://tutoria-d1a41e2aa71e.herokuapp.com/graphql'
+  phases:
+    - duration: 60   # Durée du test en secondes
+      arrivalRate: 5  # Nombre d'utilisateurs créés par seconde
+  variables:
+    emailDomain: 'artillery.io'
+
+scenarios:
+  - name: 'Create user and login'
+    flow:
+      - post:
+          url: '/'
+          json:
+            query: |
+              mutation createUser($name: String!, $email: String!, $last_name: String!, $teacher: Boolean!, $password: String!) {
+                createUser(name: $name, email: $email, last_name: $last_name, teacher: $teacher, password: $password) {
+                  id
+                  name
+                  email
+                }
+              }
+            variables:
+              name: {{ randomString() }}
+              email: user-{{ randomString() }}@{{ emailDomain }}
+              last_name: {{ randomString() }}
+              teacher: true
+              password: password
+
+      - post:
+          url: '/'
+          json:
+            query: |
+              mutation login($email: String!, $password: String!) {
+                login(email: $email, password: $password) {
+                  id
+                }
+              }
+            variables:
+              email: user-{{ randomString() }}@{{ emailDomain }}
+              password: password
+
+      - post:
+          url: '/'
+          json:
+            query: |
+              query me($userId: ID!) {
+                me(id: $userId) {
+                  email
+                }
+              }
+            variables:
+              userId: '{{ userId }}'
+     
