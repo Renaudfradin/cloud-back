@@ -6,14 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
 
 class Course extends Model
 {
-    use HasFactory;
     use HasApiTokens;
+    use HasFactory;
     use Searchable;
 
     protected $guarded = ['id'];
@@ -23,7 +22,7 @@ class Course extends Model
         return 'course_index';
     }
 
-    public function toSearchableArray() : array
+    public function toSearchableArray(): array
     {
         return [
             'id' => $this->id,
@@ -41,8 +40,8 @@ class Course extends Model
         return $this->belongsToMany(User::class, 'course_user');
     }
 
-    public function category(): HasMany
+    public function category(): BelongsTo
     {
-        return $this->hasMany(Category::class, 'name');
+        return $this->belongsTo(Category::class);
     }
 }

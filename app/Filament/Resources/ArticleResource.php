@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Pages;
-use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\Article;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -58,7 +57,7 @@ class ArticleResource extends Resource
                     ->onColor('success')
                     ->offColor('danger')
                     ->required(),
-                
+
             ]);
     }
 
@@ -68,17 +67,16 @@ class ArticleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->translateLabel()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('user.name')
                     ->label(__('User Name'))
-                    ->sortable()
-                    ->searchable(),
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('category.name')
                     ->label(__('Category Name'))
-                    ->sortable()
-                    ->searchable(),
+                    ->sortable(),
 
                 Tables\Columns\IconColumn::make('status')
                     ->translateLabel()
@@ -86,7 +84,13 @@ class ArticleResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('category')
+                    ->label(__('Category'))
+                    ->relationship('category', 'name')
+                    ->preload()
+                    ->searchable(),
+
+                Tables\Filters\TernaryFilter::make('status'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -97,13 +101,6 @@ class ArticleResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

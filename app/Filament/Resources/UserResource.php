@@ -25,11 +25,11 @@ class UserResource extends Resource
     protected function applySearchToTableQuery(Builder $query): Builder
     {
         $this->applyColumnSearchesToTableQuery($query);
-        
+
         if (filled($search = $this->getTableSearch())) {
             $query->whereIn('id', User::search($search)->keys());
         }
- 
+
         return $query;
     }
 

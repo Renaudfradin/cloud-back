@@ -9,8 +9,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Subscription extends Model
 {
-    use HasFactory;
     use HasApiTokens;
+    use HasFactory;
 
     protected $guarded = ['id'];
 

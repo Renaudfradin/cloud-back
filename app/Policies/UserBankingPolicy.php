@@ -3,8 +3,6 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\User_banking;
-use Illuminate\Auth\Access\Response;
 
 class UserBankingPolicy
 {

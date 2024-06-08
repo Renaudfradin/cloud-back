@@ -9,8 +9,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class UserBanking extends Model
 {
-    use HasFactory;
     use HasApiTokens;
+    use HasFactory;
 
     protected $guarded = ['id'];
 

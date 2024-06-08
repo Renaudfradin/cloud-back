@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
@@ -12,13 +14,13 @@ final readonly class Login
     {
         $user = User::where('email', $args['email'])->first();
         $device = 'api';
- 
+
         if (! $user || ! Hash::check($args['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-     
+
         return $user->createToken($device)->plainTextToken;
     }
 }
