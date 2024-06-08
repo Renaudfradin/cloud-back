@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
@@ -10,6 +12,6 @@ final readonly class Logout
     {
         Auth::user()->currentAccessToken()->delete();
 
-        return "Successfully logged out";
+        return 'Successfully logged out';
     }
 }

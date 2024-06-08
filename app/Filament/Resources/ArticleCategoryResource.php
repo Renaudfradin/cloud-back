@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleCategoryResource\Pages;
-use App\Filament\Resources\ArticleCategoryResource\RelationManagers;
+use App\Filament\Resources\ArticleCategoryResource\RelationManagers\ArticleRelationManager;
 use App\Models\ArticleCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -46,9 +46,9 @@ class ArticleCategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->translateLabel()
                     ->sortable(),
-            ])
-            ->filters([
-                //
+
+                Tables\Columns\TextColumn::make('slug')
+                    ->translateLabel(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\CategoryResource\RelationManagers\CourseRelationManager;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -47,6 +47,9 @@ class CategoryResource extends Resource
                     ->translateLabel()
                     ->sortable()
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('slug')
+                    ->translateLabel(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -62,7 +65,7 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CourseRelationManager::class,
         ];
     }
 

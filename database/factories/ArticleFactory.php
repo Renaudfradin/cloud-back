@@ -16,7 +16,7 @@ class ArticleFactory extends Factory
             'content' => fake()->paragraph(),
             'user_id' => User::class,
             'category_id' => ArticleCategory::class,
-            'status'=> fake()->boolean()
+            'status' => fake()->boolean(),
         ];
     }
 }

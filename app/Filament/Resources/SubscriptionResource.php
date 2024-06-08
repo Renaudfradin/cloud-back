@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubscriptionResource\Pages;
-use App\Filament\Resources\SubscriptionResource\RelationManagers;
 use App\Models\Subscription;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -31,7 +30,7 @@ class SubscriptionResource extends Resource
                     ->native(false),
 
                 Forms\Components\DatePicker::make('expiration_date')
-                    ->required(),   
+                    ->required(),
             ]);
     }
 

@@ -19,8 +19,8 @@ use Laravel\Scout\Searchable;
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasFactory;
     use HasApiTokens;
+    use HasFactory;
     use Notifiable;
     use Searchable;
 

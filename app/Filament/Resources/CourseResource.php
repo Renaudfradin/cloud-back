@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CourseResource\Pages;
-use App\Filament\Resources\CourseResource\RelationManagers;
 use App\Models\Course;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -73,7 +72,8 @@ class CourseResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->translateLabel()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('teacher.email')
                     ->label(__('User Email')),
@@ -82,7 +82,11 @@ class CourseResource extends Resource
                     ->label(__('Category')),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('category')
+                    ->label(__('Category'))
+                    ->relationship('category', 'name')
+                    ->preload()
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -93,13 +97,6 @@ class CourseResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
 
 class Article extends Model
 {
-    use HasFactory;
     use HasApiTokens;
+    use HasFactory;
     use Searchable;
 
     protected $guarded = ['id'];
@@ -22,8 +21,8 @@ class Article extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category(): HasMany
+    public function category(): BelongsTo
     {
-        return $this->hasMany(ArticleCategory::class, 'name');
+        return $this->belongsTo(ArticleCategory::class);
     }
 }
